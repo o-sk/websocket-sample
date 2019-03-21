@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="echo">
     <input v-model="text" type="text" />
     <input type="button" @click="send" value="send" />
     <p v-for="(message, i) in receiveMessages" :key="message + i">
@@ -12,7 +12,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class Home extends Vue {
+export default class Echo extends Vue {
   public text: string = "";
   public receiveMessages: string[] = [];
   public socket: WebSocket = new WebSocket("ws://localhost:8888/echo");
