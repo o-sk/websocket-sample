@@ -17,6 +17,11 @@ export default new Router({
       path: "/echo",
       name: "echo",
       component: () => import("./views/Echo.vue")
+    },
+    {
+      path: "/chat",
+      name: "chat",
+      component: () => import("./views/Chat.vue")
     }
   ]
 });
