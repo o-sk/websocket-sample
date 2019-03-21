@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <input v-model="text" type="text" />
   </div>
 </template>
 
@@ -8,5 +8,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  public text: string = "";
+}
 </script>
