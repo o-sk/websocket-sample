@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
 
@@ -31,8 +32,10 @@ func main() {
 	hub := newHub()
 	go hub.run()
 
-	http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
-		conn, _ := upgrader.Upgrade(w, r, nil)
+	r := gin.Default()
+
+	r.GET("/echo", func(c *gin.Context) {
+		conn, _ := upgrader.Upgrade(c.Writer, c.Request, nil)
 
 		for {
 			msgType, msg, err := conn.ReadMessage()
@@ -47,8 +50,9 @@ func main() {
 			}
 		}
 	})
-	http.HandleFunc("/chat", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := upgrader.Upgrade(w, r, nil)
+
+	r.GET("/chat", func(c *gin.Context) {
+		conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 		if err != nil {
 			log.Println(err)
 			return
@@ -60,7 +64,7 @@ func main() {
 		go client.readPump()
 	})
 
-	http.ListenAndServe(":8888", nil)
+	r.Run(":8888")
 }
 
 type Hub struct {
